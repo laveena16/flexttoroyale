@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml">
+
+  <mx:Label width="600" color="blue"
+            text="Flex DataGrid demo - list of learning management systems."/>
+
+  <mx:DataGrid id="dg" width="600" height="400" rowCount="4">
+    <mx:ArrayCollection>
+      <mx:Object Name="Moodle" Type="LMSWare" Licence="GPL" Description="Good for blended activity-oriented learning"/>
+      <mx:Object Name="PageFlakes" Type="Webtop service" License= "Free to use"
+		 Description="A minimal personal learning environment"/>
+      <mx:Object Name="Drupal" Type="Portalware" License="GPL" 
+		 Description="Good for project-oriented teaching" />
+      <mx:Object Name="MediaWiki" Type="Portalware" License="GPL"
+		 Description="Good for writing-to-learn and technical mini-projects teaching" />
+    </mx:ArrayCollection>
+
+    <mx:columns>
+      <mx:DataGridColumn dataField="Name"/>
+      <mx:DataGridColumn dataField="Type"/>
+      <mx:DataGridColumn dataField="License"/>
+      <mx:DataGridColumn dataField="Description"/>
+    </mx:columns>
+  </mx:DataGrid>
+</mx:Application>
