@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" 
+			   xmlns:s="library://ns.adobe.com/flex/spark" 
+			   xmlns:mx="library://ns.adobe.com/flex/mx" minWidth="955" minHeight="600">
+			   
+			   
+	<fx:Declarations>
+	</fx:Declarations>
+	
+
+   <fx:Script>
+      <![CDATA[
+         import mx.controls.Alert;
+         import mx.events.FlexEvent;
+         import mx.binding.utils.BindingUtils;
+                  import mx.binding.utils.BindingUtils;   
+                  
+         protected function btnClickMe_clickHandler(event:MouseEvent):void {
+            Alert.show("Hello World!");
+         }
+
+         protected function application_initializeHandler(event:FlexEvent):void {
+            lblHeaderfirst.text = "My succesull Application";
+         }
+
+   
+	      protected function txtInput2_preinitializeHandler(event:FlexEvent):void {
+	         BindingUtils.bindProperty(txtInputsecond,"text",txtInputfirst, "text");
+	      }  
+	      
+	      protected function txtInput6_preinitializeHandler(event:FlexEvent):void {
+            BindingUtils.bindProperty(txtInput6,"text",txtInput5, "text");
+         }
+         [Bindable]
+		  private var lms_list:XMLList;
+		
+		  private var loader:URLLoader;
+		  
+		  private function initializeHandler (event:Event):void {
+		    var req:URLRequest = new URLRequest("lms-list.xml");
+		    loader = new URLLoader ();
+		    loader.addEventListener (Event.COMPLETE, completeHandler)
+		    loader.load(req);
+		  }
+		
+		  private function completeHandler(event:Event):void {
+		    var xml_data:XML = new XML(loader.data);
+		    // trace ("Created XML datastructure from loaded XML - loader.data \n:" + loader.data); 
+		    lms_list = xml_data.children();
+		    // trace ("Extracted children from xml data - lms_list :\n" + lms_list);
+		 }
+      ]]>
+   </fx:Script>
+
+		
+		 <s:BorderContainer width = "500" height = "500" id = "mainContainer"
+      styleName = "container">
+      <s:VGroup width = "100%" height = "100%" gap = "50" horizontalAlign = "center"
+         verticalAlign = "middle">
+         <s:Label id = "lblHeaderfirst" fontSize = "40" color = "0x777777"
+            styleName = "heading" />
+            <s:TextInput id = "txtInputfirst" />
+<s:TextInput id = "txtInputsecond" 
+   preinitialize = "txtInput2_preinitializeHandler(event)" />
+   
+   
+      
+  <!-- <fx:Binding source = "txtInput3.text" destination = "txtInput4.text" />-->
+   
+   <s:BorderContainer width = "500" height = "550" id = "main_Container" 
+      styleName = "container">
+      <s:VGroup width = "100%" height = "100%" gap = "50" horizontalAlign = "center" 
+         verticalAlign = "middle">
+         <s:Label id = "lblHeader" text = "Data Binding Demonstration"
+            fontSize = "40" color = "0x777777" styleName = "heading" />
+         <s:Panel title = "Example #1 (Using Curly Braces,\{\})" width = "400" 
+            height = "100" >
+            <s:layout>
+               <s:VerticalLayout paddingTop = "10" paddingLeft = "10" />
+            </s:layout>
+            
+            <s:HGroup >
+               <s:Label text = "Type here: " width = "100" paddingTop = "6" />
+               <s:TextInput id = "txtInput1" />	
+            </s:HGroup>
+            
+            <s:HGroup >
+               <s:Label text = "Copied text: " width = "100" paddingTop = "6" />
+               <s:TextInput id = "txtInput2" text = "{txtInput1.text}" />
+            </s:HGroup>						
+         </s:Panel>
+         
+         <s:Panel title = "Example #2 (Using &lt;fx:Binding&gt;)" width = "400" 
+            height = "100" >
+            <s:layout>
+               <s:VerticalLayout paddingTop = "10" paddingLeft = "10" />
+            </s:layout>
+            
+            <s:HGroup >
+               <s:Label text = "Type here: " width = "100" paddingTop = "6" />
+               <s:TextInput id = "txtInput3" />	
+            </s:HGroup>
+            
+            <s:HGroup >
+               <s:Label text = "Copied text: " width = "100" paddingTop = "6" />
+               <s:Label id = "txtInput4" />
+            </s:HGroup>						
+         </s:Panel>
+         
+         <s:Panel title = "Example #3 (Using BindingUtils)" width = "400" 
+            height = "100" >
+            <s:layout>
+               <s:VerticalLayout paddingTop = "10" paddingLeft = "10" />
+            </s:layout>
+            
+            <s:HGroup >
+               <s:Label text = "Type here: " width = "100" paddingTop = "6" />
+               <s:TextInput id = "txtInput5" />	
+            </s:HGroup>
+            
+            <s:HGroup >
+               <s:Label text = "Copied text: " width = "100" paddingTop = "6" />
+               <s:TextInput enabled = "false" id = "txtInput6" 
+                  preinitialize = "txtInput6_preinitializeHandler(event)" />
+            </s:HGroup>						
+         </s:Panel>
+      </s:VGroup>	 
+   </s:BorderContainer>	
+   
+         <s:Button label = "Click Me!" id = "btnClickMe"
+            click = "btnClickMe_clickHandler(event)" styleName = "button" />
+      </s:VGroup>
+   </s:BorderContainer>
+		    <mx:Panel title="DataGrid Example" height="100%" width="100%" 
+        paddingTop="10" paddingLeft="10" paddingRight="10">
+
+        <mx:Label width="100%" color="blue"
+            text="List of learning management systems."/>
+
+        <mx:DataGrid id="dg" width="100%" height="100%" rowCount="7" dataProvider="{lms_list}">
+	  <mx:columns>
+	    <mx:DataGridColumn dataField="Name" headerText="Name"/>
+	    <mx:DataGridColumn dataField="Type" headerText="Type"/>
+	    <mx:DataGridColumn dataField="License" headerText="License"/>
+	    <mx:DataGridColumn dataField="Description" headerText="Description"/>
+	  </mx:columns>
+	</mx:DataGrid>
+    </mx:Panel>
+		
+		
+</s:Application>
